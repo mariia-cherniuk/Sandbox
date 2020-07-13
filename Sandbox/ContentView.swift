@@ -14,7 +14,7 @@ struct ContentView: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     
     var layout = [
-        GridItem(.adaptive(minimum: 140, maximum: 170))
+        GridItem(.fixed(100))
     ]
     
     var body: some View {
