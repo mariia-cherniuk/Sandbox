@@ -13,13 +13,9 @@ struct ContentView: View {
     
     @Environment(\.horizontalSizeClass) var sizeClass
     
-    var layout: [GridItem] {
-        if sizeClass == .compact {
-            return Array<GridItem>(repeating: GridItem(.flexible()), count: 3)
-        } else {
-            return Array<GridItem>(repeating: GridItem(.flexible()), count: 2)
-        }
-    }
+    var layout = [
+        GridItem(.adaptive(minimum: 140, maximum: 170))
+    ]
     
     var body: some View {
         ScrollView {
