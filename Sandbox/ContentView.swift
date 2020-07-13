@@ -10,24 +10,23 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var positon = 0
+    @State private var disclosureShowing = false
     
     var body: some View {
         VStack {
-            Text("")
-            
-            ScrollView {
-                ForEach(0..<100) { i in
-                    LazyVStack {
-                        Text(String(i))
-                            .onAppear {
-                                positon = i
-                                print("onAppear \(i)")
-                            }
-                    }
+            DisclosureGroup("title", isExpanded: $disclosureShowing) {
+                Text("body body body body body")
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                withAnimation {
+                    disclosureShowing.toggle()
                 }
             }
+            
+            Spacer()
         }
+        .padding()
     }
 }
 
