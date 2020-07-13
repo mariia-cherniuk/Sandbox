@@ -10,23 +10,23 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var disclosureShowing = false
-    
     var body: some View {
-        VStack {
-            DisclosureGroup("title", isExpanded: $disclosureShowing) {
-                Text("body body body body body")
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                withAnimation {
-                    disclosureShowing.toggle()
+        ScrollView {
+            TabView {
+                ForEach(1..<6) { i in
+                    GeometryReader { geo in
+                        Image("photo\(i)")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geo.size.width, height: 250)
+                            .clipped()
+                    }
                 }
             }
-            
-            Spacer()
+            .frame(height: 300)
+            .tabViewStyle(PageTabViewStyle())
+            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
         }
-        .padding()
     }
 }
 
