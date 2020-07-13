@@ -14,12 +14,13 @@ struct ContentView: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     
     var layout = [
-        GridItem(.fixed(100))
+        GridItem(.fixed(50)),
+        GridItem(.fixed(50))
     ]
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: layout) {
+            LazyVGrid(columns: layout, alignment: .leading) {
                 ForEach(1..<100) { i in
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .fill(Color.random())
