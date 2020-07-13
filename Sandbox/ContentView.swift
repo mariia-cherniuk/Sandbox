@@ -20,17 +20,22 @@ struct ContentView: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: layout, alignment: .leading) {
-                ForEach(1..<100) { i in
-                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(Color.random())
-                        .frame(height: 200)
+            LazyVGrid(columns: layout, alignment: .leading, spacing: 100, pinnedViews: .sectionHeaders) {
+                Section(header:
+                            Text("Header")
+                            .font(.title)
+                            .padding()
+                ) {
+                    ForEach(1..<100) { i in
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .fill(Color.random())
+                            .frame(height: 200)
+                    }
                 }
             }
         }
     }
 }
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
