@@ -10,22 +10,26 @@ import SwiftUI
 
 struct ContentView: View {
     
+    
+    @Environment(\.horizontalSizeClass) var sizeClass
+    
+    var layout: [GridItem] {
+        if sizeClass == .compact {
+            return Array<GridItem>(repeating: GridItem(.flexible()), count: 3)
+        } else {
+            return Array<GridItem>(repeating: GridItem(.flexible()), count: 2)
+        }
+    }
+    
     var body: some View {
         ScrollView {
-            TabView {
-                ForEach(1..<6) { i in
-                    GeometryReader { geo in
-                        Image("photo\(i)")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: geo.size.width, height: 250)
-                            .clipped()
-                    }
+            LazyVGrid(columns: layout) {
+                ForEach(1..<100) { i in
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(Color.random())
+                        .frame(height: 200)
                 }
             }
-            .frame(height: 300)
-            .tabViewStyle(PageTabViewStyle())
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
         }
     }
 }
