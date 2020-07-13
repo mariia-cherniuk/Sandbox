@@ -8,27 +8,29 @@
 import MapKit
 import SwiftUI
 
-struct ContentView: View {
+struct SampleRow: View {
+    let id: Int
+    
+    init(id: Int) {
+        self.id = id
+        print("Row \(id)")
+        
+    }
+    var body: some View {
+        Text("\(id)")
+    }
+}
 
+struct ContentView: View {
+    
     let coutries = Bundle.main.decode([String].self, from: "countries.json")
     
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading) {
-                ForEach(coutries, id: \.self) { country in
-                    HStack {
-                        Image(country)
-                            .resizable()
-                            .frame(width: 120, height: 60)
-                        
-                        Text(country)
-                            .font(.title)
-                    }
-                    
-                }
+                ForEach(1...1000, id: \.self, content: SampleRow.init)
             }
         }
-        .background(Color.red)
     }
 }
 
