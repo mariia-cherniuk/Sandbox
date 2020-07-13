@@ -9,8 +9,18 @@ import MapKit
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var tapCount = 0
+    
     var body: some View {
-        Text("Hello, World!").padding()
+        Button {
+            tapCount += 1
+        } label: {
+            HStack {
+                Image(systemName: "star")
+                Text("Tap count: \(tapCount)")
+            }
+        }
     }
 }
 
