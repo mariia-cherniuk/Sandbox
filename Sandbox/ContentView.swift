@@ -14,7 +14,7 @@ struct ContentView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
+            LazyVStack(alignment: .leading) {
                 ForEach(coutries, id: \.self) { country in
                     HStack {
                         Image(country)
@@ -28,6 +28,7 @@ struct ContentView: View {
                 }
             }
         }
+        .background(Color.red)
     }
 }
 
