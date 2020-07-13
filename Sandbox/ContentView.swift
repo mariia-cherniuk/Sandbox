@@ -9,14 +9,24 @@ import MapKit
 import SwiftUI
 
 struct ContentView: View {
-    
-    @State private var tapCount = 0
+
+    let coutries = Bundle.main.decode([String].self, from: "countries.json")
     
     var body: some View {
-        if tapCount == 0 {
-            Text("0")
-        } else {
-            Text("\(tapCount)")
+        ScrollView {
+            VStack(alignment: .leading) {
+                ForEach(coutries, id: \.self) { country in
+                    HStack {
+                        Image(country)
+                            .resizable()
+                            .frame(width: 120, height: 60)
+                        
+                        Text(country)
+                            .font(.title)
+                    }
+                    
+                }
+            }
         }
     }
 }
