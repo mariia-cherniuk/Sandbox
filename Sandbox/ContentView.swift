@@ -13,13 +13,10 @@ struct ContentView: View {
     @State private var tapCount = 0
     
     var body: some View {
-        Button {
-            tapCount += 1
-        } label: {
-            HStack {
-                Image(systemName: "star")
-                Text("Tap count: \(tapCount)")
-            }
+        if tapCount == 0 {
+            Text("0")
+        } else {
+            Text("\(tapCount)")
         }
     }
 }
@@ -29,3 +26,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
