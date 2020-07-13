@@ -8,27 +8,24 @@
 import MapKit
 import SwiftUI
 
-struct SampleRow: View {
-    let id: Int
-    
-    init(id: Int) {
-        self.id = id
-        print("Row \(id)")
-        
-    }
-    var body: some View {
-        Text("\(id)")
-    }
-}
-
 struct ContentView: View {
     
-    let coutries = Bundle.main.decode([String].self, from: "countries.json")
+    @State var positon = 0
     
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading) {
-                ForEach(1...1000, id: \.self, content: SampleRow.init)
+        VStack {
+            Text("")
+            
+            ScrollView {
+                ForEach(0..<100) { i in
+                    LazyVStack {
+                        Text(String(i))
+                            .onAppear {
+                                positon = i
+                                print("onAppear \(i)")
+                            }
+                    }
+                }
             }
         }
     }
@@ -39,4 +36,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
