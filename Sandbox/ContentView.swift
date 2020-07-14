@@ -7,66 +7,28 @@
 
 import SwiftUI
 
-struct NamesView: View {
-    let names = ["Masha", "Andrey", "Tom", "Helen"]
-    let animation: Namespace.ID
-    
-    var body: some View {
-        ForEach(names, id: \.self) { name in
-            Text(name)
-                .padding()
-                .background(Color.pink)
-                .matchedGeometryEffect(id: name, in: animation)
-        }
-    }
-}
-
 struct ContentView: View {
 
-    @State private var isVertical = false
-    @Namespace var animation
+    @State private var text = ""
     
     var body: some View {
-        if isVertical {
-            VStack(spacing: 20) {
-                NamesView(animation: animation)
-            }
-            .transition(.none)
-            .onTapGesture {
-                withAnimation {
-                    isVertical.toggle()
-                }
-            }
-        } else {
-            HStack(spacing: 20) {
-                NamesView(animation: animation)
-            }
-            .transition(.none)
-            .onTapGesture {
-                withAnimation {
-                    isVertical.toggle()
-                }
-            }
+        NavigationView {
+            TextEditor(text: $text)
+                .foregroundColor(.red)
+                .background(Color.blue) //doesn't work
+                .font(.body)
+                .lineSpacing(5)
+                .navigationTitle("TextEditor")
         }
-    }
-}
-
-// MARK: - Fix issue with fade in/out transition -> .transition(.none)
-extension AnyTransition {
-    struct NoneModifier: ViewModifier {
-        func body(content: Content) -> some View {
-            content
+        .onAppear {
+            //how to fix .background(Color.blue) 
+            UITextView.appearance().backgroundColor = .clear
         }
-    }
-    
-    static var none: AnyTransition {
-        AnyTransition.modifier(active: NoneModifier(),
-                               identity: NoneModifier())
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.sizeCategory, .accessibilityExtraExtraLarge)
+        ContentView()
     }
 }
