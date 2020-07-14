@@ -9,18 +9,56 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @ScaledMetric var frame: CGFloat = 100
+    @State private var names = ["Masha", "Andrey", "Tom", "Helen"]
+    @State private var isVertical = false
+    @Namespace var animation
     
     var body: some View {
-        VStack {
-            Text("Hello")
-                .font(.largeTitle)
-            
-            Image("Spain")
-                .resizable()
-                .aspectRatio(2, contentMode: .fit)
-                .frame(width: max(90, min(frame, 120)))
+        if isVertical {
+            VStack(spacing: 20) {
+                ForEach(names, id: \.self) { name in
+                    Text(name)
+                        .padding()
+                        .background(Color.pink)
+                        .matchedGeometryEffect(id: name, in: animation)
+                }
+            }
+            .transition(.none)
+            .onTapGesture {
+                withAnimation {
+                    isVertical.toggle()
+                }
+            }
+        } else {
+            HStack(spacing: 20) {
+                ForEach(names, id: \.self) { name in
+                    Text(name)
+                        .padding()
+                        .background(Color.pink)
+                        .matchedGeometryEffect(id: name, in: animation)
+                }
+            }
+            .transition(.none)
+            .onTapGesture {
+                withAnimation {
+                    isVertical.toggle()
+                }
+            }
         }
+    }
+}
+
+// MARK: - Fix issue with fade in/out transition -> .transition(.none)
+extension AnyTransition {
+    struct NoneModifier: ViewModifier {
+        func body(content: Content) -> some View {
+            content
+        }
+    }
+    
+    static var none: AnyTransition {
+        AnyTransition.modifier(active: NoneModifier(),
+                               identity: NoneModifier())
     }
 }
 
