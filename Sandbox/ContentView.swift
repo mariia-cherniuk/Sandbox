@@ -8,21 +8,57 @@
 import MapKit
 import SwiftUI
 
-struct ContentView: View {
+struct PrimaryView: View {
     
+    @State private var selection: Int?
+    
+    var body: some View {
+        List(0..<5, selection: $selection) { i in
+            NavigationLink(destination:
+                            SupplementaryView(id: i)) {
+                Text("Item \(i)")
+            }
+        }
+        .navigationTitle("Menu")
+        .listStyle(SidebarListStyle())
+    }
+}
+
+struct SupplementaryView: View {
+    
+    @State private var selection: Int?
+    
+    let id: Int
+    
+    var body: some View {
+        List(0..<5, selection: $selection) { i in
+            NavigationLink(destination:
+                            SecondaryView(group: i, id: id)) {
+                Text("Row \(i)")
+            }
+        }
+        .navigationTitle("Menu")
+        .listStyle(InsetGroupedListStyle())
+    }
+}
+
+struct SecondaryView: View {
+    
+    let group: Int
+    let id:  Int
+    
+    var body: some View {
+        Text("Destination \(id) - \(group)")
+    }
+}
+
+struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List(0..<100) { i in
-                NavigationLink(destination:
-                                Text("Destination \(i)")) {
-                    Text("Item \(i)")
-                }
-            }
-            .navigationTitle("Menu")
-            .listStyle(SidebarListStyle())
-            
-            Text("Default")
+            PrimaryView()
+            SupplementaryView(id: 0)
+            SecondaryView(group: 0, id: 0)
         }
     }
 }
