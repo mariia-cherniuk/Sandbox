@@ -8,25 +8,29 @@
 import MapKit
 import SwiftUI
 
+struct Person: Identifiable {
+    
+    let id = UUID()
+    
+    var name: String
+    var children: [Person]?
+}
+
 struct ContentView: View {
     
-    var layout = [
-        GridItem(.adaptive(minimum: 100))
-    ]
+    var people: [Person] {
+        let masha = Person(name: "masha")
+        let andrey = Person(name: "andrey")
+        let kiril = Person(name: "kiril")
+        let helen = Person(name: "helen", children: [kiril])
+        let mom = Person(name: "zina", children: [helen, masha, andrey])
+        return [mom, helen, masha]
+    }
     
     var body: some View {
-        ScrollView {
-            ForEach(0..<5) { i in
-                ScrollView(.horizontal) {
-                    LazyHGrid(rows: layout) {
-                        ForEach(0..<100) { i in
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .fill(Color.random())
-                                .frame(width: 100, height: 100)
-                        }
-                    }
-                }
-            }
+        List(people, children: \.children) { person in
+            Image(systemName: "person.circle")
+            Text(person.name)
         }
     }
 }
