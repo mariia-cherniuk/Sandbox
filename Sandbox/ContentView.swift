@@ -12,21 +12,14 @@ struct ContentView: View {
     @ScaledMetric var frame: CGFloat = 100
     
     var body: some View {
-        TabView {
-            VStack {
-                Text("Hello")
-                    .font(.largeTitle)
-                
-                Image("Spain")
-                    .resizable()
-                    .aspectRatio(2, contentMode: .fit)
-                    .frame(width: frame)
-            }
-            .tabItem {
-                Image(systemName: "star")
-                    .resizable()
-                Text("Star")
-            }
+        VStack {
+            Text("Hello")
+                .font(.largeTitle)
+            
+            Image("Spain")
+                .resizable()
+                .aspectRatio(2, contentMode: .fit)
+                .frame(width: max(90, min(frame, 120)))
         }
     }
 }
