@@ -8,35 +8,21 @@
 import MapKit
 import SwiftUI
 
-struct Person: Identifiable {
-    
-    let id = UUID()
-    
-    var name: String
-    var children: [Person]?
-}
-
 struct ContentView: View {
     
-    var people: [Person] {
-        let masha = Person(name: "masha")
-        let andrey = Person(name: "andrey")
-        let kiril = Person(name: "kiril")
-        let helen = Person(name: "helen", children: [kiril])
-        let mom = Person(name: "zina", children: [helen, masha, andrey])
-        return [mom, helen, masha]
-    }
     
     var body: some View {
-        OutlineGroup(people, children: \.children) { person in
-            if person.children != nil {
-                Image(systemName: "person")
-                Text(person.name)
-                    .font(.headline)
-            } else {
-                Image(systemName: "person.circle")
-                Text(person.name)
+        NavigationView {
+            List(0..<100) { i in
+                NavigationLink(destination:
+                                Text("Destination \(i)")) {
+                    Text("Item \(i)")
+                }
             }
+            .navigationTitle("Menu")
+            .listStyle(SidebarListStyle())
+            
+            Text("Default")
         }
     }
 }
