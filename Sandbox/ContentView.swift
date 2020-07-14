@@ -7,21 +7,29 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct NamesView: View {
+    let names = ["Masha", "Andrey", "Tom", "Helen"]
+    let animation: Namespace.ID
     
-    @State private var names = ["Masha", "Andrey", "Tom", "Helen"]
+    var body: some View {
+        ForEach(names, id: \.self) { name in
+            Text(name)
+                .padding()
+                .background(Color.pink)
+                .matchedGeometryEffect(id: name, in: animation)
+        }
+    }
+}
+
+struct ContentView: View {
+
     @State private var isVertical = false
     @Namespace var animation
     
     var body: some View {
         if isVertical {
             VStack(spacing: 20) {
-                ForEach(names, id: \.self) { name in
-                    Text(name)
-                        .padding()
-                        .background(Color.pink)
-                        .matchedGeometryEffect(id: name, in: animation)
-                }
+                NamesView(animation: animation)
             }
             .transition(.none)
             .onTapGesture {
@@ -31,12 +39,7 @@ struct ContentView: View {
             }
         } else {
             HStack(spacing: 20) {
-                ForEach(names, id: \.self) { name in
-                    Text(name)
-                        .padding()
-                        .background(Color.pink)
-                        .matchedGeometryEffect(id: name, in: animation)
-                }
+                NamesView(animation: animation)
             }
             .transition(.none)
             .onTapGesture {
