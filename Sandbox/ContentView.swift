@@ -28,9 +28,15 @@ struct ContentView: View {
     }
     
     var body: some View {
-        List(people, children: \.children) { person in
-            Image(systemName: "person.circle")
-            Text(person.name)
+        OutlineGroup(people, children: \.children) { person in
+            if person.children != nil {
+                Image(systemName: "person")
+                Text(person.name)
+                    .font(.headline)
+            } else {
+                Image(systemName: "person.circle")
+                Text(person.name)
+            }
         }
     }
 }
